@@ -59,9 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.fromLTRB(0, 8, 8, 0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          imageList[index],
-          fit: BoxFit.cover,
+        child: Container(
+          color: Colors.grey[300],
+          child: Image.network(
+            imageList[index],
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
