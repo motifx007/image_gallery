@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             return InkWell(
               onTapDown: (TapDownDetails details) {
-                _showPopupMenu(details.globalPosition, imageList[index]);
+                showMyDialog(index);
               },
               child: _gridViewItem(index),
             );
@@ -67,28 +67,35 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _showPopupMenu(Offset offset, String imageUrl) async {
-    double left = offset.dx;
-    double top = offset.dy;
-    await showMenu(
+  showMyDialog(int index) {
+    return showDialog(
       context: context,
-      position: RelativeRect.fromLTRB(left, top, left, 0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
-      ),
-      color: Colors.white.withAlpha(230),
-      items: [
-        PopupMenuItem<String>(
-          padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
-          height: 24,
-          value: imageUrl,
-          enabled: true,
-          child: Text(
-            imageUrl,
-          ),
+      builder: (ctx) => AlertDialog(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        title: const Text("Image Url"),
+        content: Wrap(
+          children: [
+            Text(imageList[index]),
+          ],
         ),
-      ],
-      elevation: 2.0,
+        actions: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            )),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text("Okay",
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1!
+                    .copyWith(color: Colors.white)),
+          ),
+        ],
+      ),
     );
   }
 }
